@@ -45,6 +45,14 @@ struct SettingsView: View {
 
             SteamSettingsSection()
 
+            Section("Appearance") {
+                Picker("Theme", selection: $settings.theme) {
+                    ForEach(AppTheme.allCases) { theme in
+                        Text(theme.displayName).tag(theme)
+                    }
+                }
+            }
+
             Section("Audio") {
                 Toggle(isOn: $settings.muted) {
                     Text("Mute videos and pages")

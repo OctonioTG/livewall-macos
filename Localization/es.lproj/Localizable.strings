@@ -164,6 +164,13 @@
 "Desktop: Livewall makes lighter copies sized to your display in the background. Choose one under each video in the Library." = "Escritorio: Livewall crea en segundo plano copias más ligeras del tamaño de tu pantalla. Elige una debajo de cada video en la Biblioteca.";
 "“Optimized” looks the same as the original and uses less memory. “Battery saver (30 fps)” halves CPU and GPU use with slightly less smooth motion." = "“Optimizado” se ve igual que el original y usa menos memoria. “Ahorro de batería (30 fps)” reduce a la mitad el uso de CPU y GPU con un movimiento un poco menos fluido.";
 "Lock screen: always uses the original file, because macOS plays it in slow motion when you lock and unlock." = "Pantalla de bloqueo: siempre usa el archivo original, porque macOS lo reproduce en cámara lenta al bloquear y desbloquear.";
+
+/* Appearance */
+"Appearance" = "Apariencia";
+"Theme" = "Tema";
+"Light" = "Claro";
+"Dark" = "Oscuro";
+
 "Audio" = "Audio";
 "Mute videos and pages" = "Silenciar videos y páginas";
 "With more than one display, only the main display plays sound." = "Con más de una pantalla, solo la principal reproduce sonido.";

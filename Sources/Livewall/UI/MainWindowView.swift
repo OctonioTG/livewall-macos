@@ -6,6 +6,7 @@ struct MainWindowView: View {
     @EnvironmentObject private var library: WallpaperLibrary
     @EnvironmentObject private var lockScreen: LockScreenModel
     @EnvironmentObject private var steamAccount: SteamAccount
+    @EnvironmentObject private var settings: AppSettings
     @State private var tab = MainTab.library
 
     var body: some View {
@@ -25,6 +26,7 @@ struct MainWindowView: View {
         }
         // Sidebar tabs get the system Liquid Glass sidebar, like System Settings.
         .tabViewStyle(.sidebarAdaptable)
+        .withAppTheme(settings)
         .frame(minWidth: 960, minHeight: 600)
         // Imports (file or Workshop) append to the library; offer the lock screen for each new video.
         .onChange(of: library.userWallpapers.count) { old, new in

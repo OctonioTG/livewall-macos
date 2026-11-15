@@ -10,6 +10,7 @@ final class AppSettings: ObservableObject {
         static let pauseOnBattery = "pauseOnBattery"
         static let muted = "muted"
         static let frameRate = "frameRate"
+        static let theme = "appTheme"
     }
 
     /// Stored instead of removing the key, so "no wallpaper" survives relaunch without falling back to the default.
@@ -19,6 +20,9 @@ final class AppSettings: ObservableObject {
 
     private let defaults: UserDefaults
 
+    @Published var theme: AppTheme {
+        didSet { defaults.set(theme.rawValue, forKey: Key.theme) }
+    }
     @Published var selectedWallpaperID: UUID? {
         didSet { defaults.set(selectedWallpaperID?.uuidString ?? Self.noneSentinel, forKey: Key.selectedWallpaper) }
     }
@@ -57,5 +61,6 @@ final class AppSettings: ObservableObject {
         pauseOnBattery = defaults.bool(forKey: Key.pauseOnBattery)
         muted = defaults.bool(forKey: Key.muted)
         frameRate = defaults.integer(forKey: Key.frameRate)
+        theme = defaults.string(forKey: Key.theme).flatMap(AppTheme.init(rawValue:)) ?? .system
     }
 }
