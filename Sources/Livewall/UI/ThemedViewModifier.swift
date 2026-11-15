@@ -15,3 +15,4 @@ extension View {
         modifier(ThemedViewModifier(settings: settings))
     }
 }
+

@@ -24,3 +24,4 @@ enum AppTheme: String, CaseIterable, Identifiable {
         }
     }
 }
+
