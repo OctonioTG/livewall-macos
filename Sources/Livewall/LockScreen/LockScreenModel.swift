@@ -152,6 +152,28 @@ final class LockScreenModel: ObservableObject {
         refresh()
     }
 
+    /// Restores the original Apple Aerial if the specified wallpaper is currently installed on it.
+    func restoreIfApplied(wallpaperID: UUID) {
+        guard !isWorking, let aerial else { return }
+        if appliedState.appliedWallpaperID(for: aerial) == wallpaperID {
+            restore()
+        }
+    }
+
+    /// Reconciles the lock screen: if the selected Aerial has a Livewall backup (custom video installed),
+    /// but the installed wallpaper is no longer in the library, automatically restore Apple's original movie.
+    func reconcileOrphanedAerial(validWallpaperIDs: Set<UUID>) {
+        guard !isWorking, let aerial, hasBackup else { return }
+        if let appliedID = appliedState.appliedWallpaperID(for: aerial) {
+            if !validWallpaperIDs.contains(appliedID) {
+                restore()
+            }
+        } else {
+            // A backup exists but no receipt matches any known wallpaper
+            restore()
+        }
+    }
+
     private func fail(_ error: Error) {
         status = nil
         self.error = error.localizedDescription

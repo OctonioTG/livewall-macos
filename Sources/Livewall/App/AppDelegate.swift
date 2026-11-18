@@ -18,6 +18,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         desktop.start()
         desktopVariants.start()
+        lockScreen.reconcileOrphanedAerial(validWallpaperIDs: Set(library.wallpapers.map(\.id)))
         Task { await updater.check() }
     }
 

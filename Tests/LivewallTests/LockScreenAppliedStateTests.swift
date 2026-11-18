@@ -36,4 +36,18 @@ import Testing
         try FileManager.default.removeItem(at: aerial.videoURL)
         #expect(!state.isApplied(wallpaperID: id, sourceRevision: "v1", aerial: aerial))
     }
+
+    @Test func retrievesAppliedWallpaperID() throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "applied-test-\(UUID())")
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let aerial = Aerial(id: "test", name: "Test", videoURL: root.appending(path: "installed.mov"))
+        try Data("movie".utf8).write(to: aerial.videoURL)
+        let state = LockScreenAppliedState(libraryRoot: root), id = UUID()
+        #expect(state.appliedWallpaperID(for: aerial) == nil)
+        try state.record(wallpaperID: id, sourceRevision: "v1", aerial: aerial)
+        #expect(state.appliedWallpaperID(for: aerial) == id)
+        state.clear(aerial)
+        #expect(state.appliedWallpaperID(for: aerial) == nil)
+    }
 }

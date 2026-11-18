@@ -32,6 +32,15 @@ final class LockScreenAppliedState {
         return current == receipt.movieRevision
     }
 
+    /// Returns the ID of the wallpaper installed on the Aerial, if its movie matches the receipt.
+    func appliedWallpaperID(for aerial: Aerial) -> UUID? {
+        guard let data = try? Data(contentsOf: file(aerial)),
+              let receipt = try? JSONDecoder().decode(Receipt.self, from: data),
+              let current = try? Self.fileRevision(aerial.videoURL),
+              current == receipt.movieRevision else { return nil }
+        return receipt.wallpaperID
+    }
+
     func record(wallpaperID: UUID, sourceRevision: String, aerial: Aerial) throws {
         let receipt = Receipt(wallpaperID: wallpaperID, sourceRevision: sourceRevision,
                               movieRevision: try Self.fileRevision(aerial.videoURL))

@@ -21,10 +21,13 @@ final class LibraryViewModel: ObservableObject {
         }
     }
 
-    func remove(_ wallpaper: Wallpaper, library: WallpaperLibrary, settings: AppSettings) {
+    func remove(_ wallpaper: Wallpaper, library: WallpaperLibrary, settings: AppSettings, lockScreen: LockScreenModel? = nil) {
         if settings.selectedWallpaperID == wallpaper.id {
-            settings.selectedWallpaperID = nil
+            let fallback = library.userWallpapers.first(where: { $0.id != wallpaper.id })?.id
+                ?? BuiltInShaders.wallpapers.first?.id
+            settings.selectedWallpaperID = fallback
         }
+        lockScreen?.restoreIfApplied(wallpaperID: wallpaper.id)
         library.remove(wallpaper)
     }
 }

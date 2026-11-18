@@ -6,6 +6,7 @@ struct LibraryView: View {
     @EnvironmentObject private var settings: AppSettings
     @EnvironmentObject private var library: WallpaperLibrary
     @EnvironmentObject private var desktop: DesktopController
+    @EnvironmentObject private var lockScreen: LockScreenModel
     @StateObject private var model = LibraryViewModel()
     @State private var previewID: UUID?
     @State private var showsPreview = true
@@ -96,7 +97,7 @@ struct LibraryView: View {
             get: { pendingRemoval != nil }, set: { if !$0 { pendingRemoval = nil } }
         ), presenting: pendingRemoval) { wallpaper in
             Button("Delete", role: .destructive) {
-                model.remove(wallpaper, library: library, settings: settings)
+                model.remove(wallpaper, library: library, settings: settings, lockScreen: lockScreen)
                 pendingRemoval = nil
                 repairSelection()
             }
